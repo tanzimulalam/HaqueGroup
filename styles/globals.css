@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-bgDark text-white font-sans antialiased;
+}
+
+::selection {
+  background: #00f0ff33;
+  color: #ffffff;
+}
+
+.glass-panel {
+  @apply bg-white/5 border border-white/10 backdrop-blur-md shadow-neon;
+}
+
+.neon-border {
+  border-image: linear-gradient(90deg, #00f0ff, #a020f0) 1;
+}
+
+.section-padding {
+  @apply px-4 sm:px-6 lg:px-10;
+}
+
+.max-width {
+  @apply max-w-6xl mx-auto;
+}
+
+.scroll-snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.scroll-snap-start {
+  scroll-snap-align: start;
+}
+
+/* Custom cursor */
+body {
+  cursor: none;
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #00f0ff;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 50;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid #00f0ff88;
+  box-shadow: 0 0 20px #00f0ff55;
+  pointer-events: none;
+  z-index: 49;
+  transform: translate(-50%, -50%);
+}
+
