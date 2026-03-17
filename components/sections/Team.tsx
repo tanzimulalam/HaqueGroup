@@ -8,6 +8,11 @@ const team = [
     bio: "Leads overall vision, strategy, and high-impact consulting across infrastructure, networking, and cybersecurity."
   },
   {
+    name: "Anamika Rashid",
+    role: "Co-Founder",
+    bio: "Co-leads the direction of Haque Consultancy and supports client relationships, planning, and delivery."
+  },
+  {
     name: "Tasnimul Alam",
     role: "Technical Director & Software Consultant",
     bio: "Designs and builds reliable software systems, integrates business applications, and oversees technical delivery."
