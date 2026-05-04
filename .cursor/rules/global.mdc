@@ -1,0 +1,59 @@
+---
+description: Global rules that always apply when working on this repo.
+alwaysApply: true
+---
+
+# Global rules — Haque Consultancy site
+
+You are working on a **professional consulting website**, not a portfolio,
+not a tech demo. When in doubt, choose simpler over flashier and slower.
+
+## Always
+
+- Read `design.mdc` and `tech.mdc` before making structural changes.
+- Default to existing components (`Button`, `SectionTitle`, `ServiceCard`,
+  `card` / `card-soft` classes) before writing new ones.
+- Run `npm run lint` and `npm run build` after non-trivial changes.
+  Both must succeed with **zero warnings**.
+- Respect `prefers-reduced-motion`. The global stylesheet already zeroes
+  out animations under that media query; do not bypass it.
+- Maintain accessibility: every interactive element must be reachable via
+  keyboard, have a visible focus ring, and carry an accurate
+  `aria-label` if the visible text is missing.
+- Use semantic HTML: `<header>`, `<nav>`, `<main>`, `<section>`,
+  `<article>`, `<footer>`. Avoid `<div>` soup.
+
+## Never
+
+- Introduce neon colors, cyan/purple gradients, or glowing hover effects.
+- Add particle backgrounds, WebGL canvases, custom cursors, parallax,
+  or letter-by-letter stagger animations.
+- Add carousels, sliders, marquees, or auto-playing media.
+- Use emojis as icons (use `lucide-react`).
+- Add a third-party font via `<link>` — use `next/font` exclusively.
+- Add a dependency without checking the bundle impact (see budget in
+  `tech.mdc`).
+- Commit `.next/`, `out/`, or any generated artifact.
+- Push to `main` without confirming the GitHub Actions deploy succeeded.
+
+## Content tone
+
+- Plain, confident, specific. No buzzwords ("synergy", "leverage", "cutting-edge").
+- Outcomes over features. Every service description ends in a tangible result.
+- No vague stats. If we can't back a number up, we don't print it.
+- Write in second person ("you / your business"), present tense.
+
+## When the user asks for "a redesign" or "more flashy"
+
+- Push back politely. The brand identity is intentionally calm. Suggest a
+  small, restrained alternative (e.g. one more accent moment, an extra
+  whitespace pass) instead of reintroducing forbidden patterns.
+
+## Editing checklist before "done"
+
+- [ ] No console errors on load (DevTools → Console).
+- [ ] No CLS shifts when images / fonts load.
+- [ ] Looks correct at 320 px, 768 px, 1024 px, 1440 px.
+- [ ] `Tab` key navigates the whole page in logical order.
+- [ ] `prefers-reduced-motion: reduce` disables non-essential animation.
+- [ ] Lighthouse mobile performance ≥ 90.

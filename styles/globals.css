@@ -13,92 +13,54 @@ body,
 }
 
 body {
-  @apply bg-bgDark text-white font-sans antialiased;
+  @apply bg-cream text-ink antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Sections offset so the fixed navbar (h-16 = 4rem) doesn't cover anchor targets */
+/* Headings use the serif display family */
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: theme("colors.ink");
+}
+
+/* Sections offset so a fixed nav (h-16 / 4rem) doesn't cover anchor targets. */
 section[id] {
   scroll-margin-top: 5rem;
 }
 
 ::selection {
-  background: #00f0ff33;
-  color: #ffffff;
+  background: theme("colors.accent.soft");
+  color: theme("colors.ink");
 }
 
-.glass-panel {
-  @apply bg-white/5 border border-white/10 backdrop-blur-md shadow-neon;
-}
-
-.neon-border {
-  border-image: linear-gradient(90deg, #00f0ff, #a020f0) 1;
-}
-
+/* Reusable layout helpers */
 .section-padding {
   @apply px-4 sm:px-6 lg:px-10;
 }
 
 .max-width {
-  @apply max-w-6xl mx-auto;
+  @apply max-w-content mx-auto;
 }
 
-.scroll-snap-y {
-  scroll-snap-type: y mandatory;
+/* Calm card – replaces the old glassmorphism / neon. */
+.card {
+  @apply bg-white border border-line rounded-2xl;
 }
 
-.scroll-snap-start {
-  scroll-snap-align: start;
+.card-soft {
+  @apply bg-sand border border-line/70 rounded-2xl;
 }
 
-/* Custom cursor: only when enabled by Cursor component (fine pointer + no reduced motion) */
-body.custom-cursor,
-body.custom-cursor a,
-body.custom-cursor button,
-body.custom-cursor [role="button"],
-body.custom-cursor input,
-body.custom-cursor textarea,
-body.custom-cursor label {
-  cursor: none;
+/* Subtle divider line */
+.hairline {
+  @apply border-t border-line;
 }
 
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #00f0ff;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  z-index: 60;
-  will-change: transform;
-}
-
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 240, 255, 0.55);
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
-  pointer-events: none;
-  z-index: 59;
-  will-change: transform;
-  transition: width 0.2s ease, height 0.2s ease,
-    border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.cursor-ring.is-hover {
-  width: 52px;
-  height: 52px;
-  border-color: rgba(160, 32, 240, 0.75);
-  background: rgba(0, 240, 255, 0.06);
-}
-
-/* Reduced motion: kill non-essential animations */
+/* Respect user motion preferences globally. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

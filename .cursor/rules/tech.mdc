@@ -1,0 +1,69 @@
+---
+description: Tech stack, code style, and performance budget.
+alwaysApply: true
+---
+
+# Tech stack & engineering rules
+
+## Stack
+
+- **Framework**: Next.js 14 (Pages Router) with **`output: "export"`** —
+  the site is fully statically pre-rendered to `out/` and served from
+  GitHub Pages at `haque-consulting.com`.
+- **Language**: TypeScript strict mode.
+- **Styling**: Tailwind CSS only. No CSS-in-JS, no SCSS, no inline `style`
+  attributes for layout.
+- **Animation**: `framer-motion` only. No `animejs`, no GSAP, no canvas.
+- **Icons**: `lucide-react` only.
+- **SEO**: `next-seo` for meta + JSON-LD inline on home page.
+- **Fonts**: `next/font/google` (self-hosted at build time). Never re-add a
+  `<link rel="stylesheet" href="https://fonts.googleapis.com/...">`.
+- **Deploy**: GitHub Actions → GitHub Pages (`.github/workflows/deploy.yml`).
+  `public/CNAME` declares the custom domain.
+
+## Forbidden libraries
+
+Do not reintroduce any of these without an explicit ticket:
+
+- `three`, `@react-three/fiber`, `@react-three/drei` (heavy, no use case here).
+- `animejs` (we use framer-motion).
+- Carousel libraries (`swiper`, `keen-slider`, `react-slick`, etc.).
+- jQuery or any DOM-manipulating runtime.
+- Any analytics package without consent handling.
+
+## Code style
+
+- 2-space indent, TypeScript everywhere, no `any` unless commented why.
+- Components are functions, default-exported, named PascalCase.
+- File names match component names (`Hero.tsx` exports `Hero`).
+- Keep components dumb; lift logic to hooks if it grows.
+- No comments that just narrate code (“// loop over items”). Comments only
+  for non-obvious intent or constraints.
+- Run `npm run lint` and `npm run build` before opening a PR; both must
+  pass cleanly with **zero warnings**.
+
+## Performance budget
+
+Hard limits for the home page on a mid-tier mobile (Moto G4 / 4G):
+
+- LCP **< 2.5 s**
+- CLS **< 0.1**
+- INP **< 200 ms**
+- Total JS shipped on first load: **< 150 kB gzip**.
+- No render-blocking third-party requests on first paint.
+- Below-the-fold images **must** be lazy.
+- Any new dependency over ~30 kB needs justification.
+
+## Static export caveats (don’t break these)
+
+- `next/image` must keep `images.unoptimized: true` (Pages can’t optimize).
+- No `getServerSideProps`, no API routes — they fail static export.
+- Any new page goes in `pages/` (Pages Router), not `app/`.
+- Keep `trailingSlash: true` so `/foo/` → `/foo/index.html` works on Pages.
+
+## Adding pages
+
+Currently a single-page site with anchor sections. If a real
+multi-page split is needed (e.g. `/case-studies/[slug]`), each new route
+must be statically generable (`getStaticProps` + `getStaticPaths` with
+`fallback: false`).

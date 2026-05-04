@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import AnimatedButton from "../ui/AnimatedButton";
+import Button from "../ui/Button";
 
 const navItems = [
-  { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
+  { label: "Why us", href: "#why" },
+  { label: "Case studies", href: "#cases" },
   { label: "About", href: "#about" },
-  { label: "Team", href: "#team" },
   { label: "Contact", href: "#contact" }
 ];
 
@@ -16,13 +16,12 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close on Escape, lock background scroll while open
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -38,13 +37,10 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <motion.header
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 inset-x-0 z-40 transition-colors ${
+    <header
+      className={`fixed top-0 inset-x-0 z-40 transition-colors duration-200 ${
         scrolled || open
-          ? "bg-bgDark/85 backdrop-blur-md border-b border-white/5"
+          ? "bg-cream/90 backdrop-blur supports-[backdrop-filter]:bg-cream/80 border-b border-line"
           : "bg-transparent"
       }`}
     >
@@ -53,18 +49,18 @@ export default function Navbar() {
           <a
             href="#home"
             onClick={() => setOpen(false)}
-            className="font-heading text-base sm:text-lg tracking-[0.2em] uppercase text-white"
+            className="font-heading text-lg text-ink"
             aria-label="Haque Consultancy home"
           >
-            <span className="text-accent">Haque</span> Consultancy
+            Haque <span className="text-accent">Consultancy</span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+          <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm text-gray-300 hover:text-accent transition-colors"
+                className="text-sm text-mute hover:text-ink transition-colors"
               >
                 {item.label}
               </a>
@@ -72,9 +68,9 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:block">
-            <AnimatedButton href="#contact" ariaLabel="Get in touch">
-              Get in Touch
-            </AnimatedButton>
+            <Button href="#contact" variant="primary" ariaLabel="Book a free consultation">
+              Book a consultation
+            </Button>
           </div>
 
           <button
@@ -83,7 +79,7 @@ export default function Navbar() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((prev) => !prev)}
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border border-white/10 text-gray-200 hover:text-accent hover:border-accent/40 transition-colors"
+            className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border border-line text-ink hover:bg-sand transition-colors"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -95,40 +91,40 @@ export default function Navbar() {
           <motion.nav
             id="mobile-nav"
             key="mobile-nav"
-            initial={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.18 }}
             aria-label="Mobile"
-            className="md:hidden border-t border-white/5 bg-bgDark/95 backdrop-blur-md"
+            className="md:hidden border-t border-line bg-cream/95 backdrop-blur"
           >
-            <div className="section-padding py-4">
-              <ul className="max-width flex flex-col gap-1">
+            <div className="section-padding py-3">
+              <ul className="max-width flex flex-col">
                 {navItems.map((item) => (
                   <li key={item.href}>
                     <a
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="block rounded-lg px-3 py-3 text-base text-gray-200 hover:text-accent hover:bg-white/5 transition-colors"
+                      className="block rounded-md px-3 py-3 text-base text-ink hover:bg-sand transition-colors"
                     >
                       {item.label}
                     </a>
                   </li>
                 ))}
-                <li className="pt-2">
-                  <a
+                <li className="mt-2">
+                  <Button
                     href="#contact"
-                    onClick={() => setOpen(false)}
-                    className="block w-full text-center rounded-full bg-gradient-to-r from-accent to-accentPurple text-bgDark text-sm font-medium py-2 shadow-neon"
+                    variant="primary"
+                    className="w-full"
                   >
-                    Get in Touch
-                  </a>
+                    Book a consultation
+                  </Button>
                 </li>
               </ul>
             </div>
           </motion.nav>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import type { ReactNode } from "react";
 
 interface SectionTitleProps {
   eyebrow?: string;
@@ -19,26 +18,23 @@ export default function SectionTitle({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.6 }}
-      className={`flex flex-col gap-2 ${alignment}`}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`flex flex-col gap-3 ${alignment}`}
     >
       {eyebrow && (
-        <p className="text-xs font-medium tracking-[0.25em] uppercase text-accent">
+        <p className="text-xs font-medium tracking-[0.18em] uppercase text-accent">
           {eyebrow}
         </p>
       )}
-      <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl">
+      <h2 className="font-heading text-3xl sm:text-4xl text-ink max-w-prose">
         {title}
       </h2>
       {subtitle && (
-        <p className="text-sm sm:text-base text-gray-300 max-w-xl">
-          {subtitle}
-        </p>
+        <p className="text-base text-mute max-w-prose">{subtitle}</p>
       )}
     </motion.div>
   );
 }
-

@@ -1,120 +1,77 @@
-import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
-import anime from "animejs";
 import { motion } from "framer-motion";
-import AnimatedButton from "../ui/AnimatedButton";
+import { ArrowRight } from "lucide-react";
+import Button from "../ui/Button";
 
-const HeroBackground = dynamic(
-  () => import("../three/HeroBackground"),
-  { ssr: false }
-);
+const fadeUp = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 }
+};
 
 export default function Hero() {
-  const titleRef = useRef<HTMLHeadingElement | null>(null);
-
-  useEffect(() => {
-    if (!titleRef.current) return;
-    const letters = titleRef.current.querySelectorAll("span.char");
-    anime({
-      targets: letters,
-      opacity: [0, 1],
-      translateY: [12, 0],
-      easing: "easeOutQuad",
-      duration: 900,
-      delay: anime.stagger(40)
-    });
-  }, []);
-
-  const headingText = "Haque Consultancy";
-
   return (
-    <section className="relative min-h-[100vh] flex items-center section-padding pt-24 pb-24">
-      <HeroBackground />
-      <div className="max-width grid md:grid-cols-[minmax(0,1.6fr),minmax(0,1fr)] gap-10 items-center relative z-10">
-        <div className="space-y-6">
-          <p className="text-xs font-medium tracking-[0.3em] uppercase text-accent">
-            Woodbridge, VA • Next-Gen IT Solutions
-          </p>
-          <h1
-            ref={titleRef}
-            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight"
-            aria-label={headingText}
-          >
-            {headingText.split("").map((char, index) => (
-              <span
-                key={`${char}-${index}`}
-                className={`char inline-block ${
-                  char === " " ? "w-2 sm:w-3" : ""
-                }`}
-              >
-                {char}
-              </span>
-            ))}
-          </h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-sm sm:text-base text-gray-300 max-w-xl"
-          >
-            Empowering your business with secure, scalable, and reliable IT
-            infrastructure—from hardware and software to cybersecurity, network
-            architecture, and data center operations—right from Woodbridge, VA.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            className="text-xs sm:text-sm text-gray-400"
-          >
-            Hardware • Software • Cybersecurity • Network • Data Center
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="flex flex-wrap gap-3 pt-2"
-          >
-            <AnimatedButton href="#services">Explore Services</AnimatedButton>
-            <AnimatedButton href="#contact" variant="outline">
-              Contact Us
-            </AnimatedButton>
-          </motion.div>
-        </div>
+    <section className="relative section-padding pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+      {/* Calm decorative grid in the background—pure CSS, no canvas, no animation */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.45] [background-image:linear-gradient(to_right,rgba(30,30,30,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,30,30,0.04)_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]"
+      />
+
+      <div className="max-width relative grid md:grid-cols-12 gap-10 items-end">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="hidden md:block"
+          {...fadeUp}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="md:col-span-8 space-y-6"
         >
-          <div className="glass-panel rounded-3xl p-6 animate-pulse-soft">
-            <p className="text-xs font-medium text-accent mb-2">
-              Trusted IT Partner
-            </p>
-            <p className="text-sm text-gray-200 mb-4">
-              Proactive monitoring, rapid incident response, and strategic
-              consulting to keep your business always-on and secure.
-            </p>
-            <div className="grid grid-cols-3 gap-3 text-xs text-gray-300">
-              <div>
-                <p className="text-2xl font-heading text-accent">24/7</p>
-                <p>Support Readiness</p>
-              </div>
-              <div>
-                <p className="text-2xl font-heading text-accentPurple">
-                  10+
-                </p>
-                <p>Years Combined</p>
-              </div>
-              <div>
-                <p className="text-2xl font-heading text-white">100%</p>
-                <p>Client Focused</p>
-              </div>
-            </div>
+          <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent">
+            IT Consulting · Woodbridge, VA
+          </p>
+          <h1 className="font-heading text-4xl sm:text-5xl text-ink leading-[1.05]">
+            IT solutions that work—
+            <span className="italic text-accent">without the noise.</span>
+          </h1>
+          <p className="text-lg text-mute max-w-prose">
+            We help small and mid-sized businesses keep their systems secure,
+            their teams productive, and their roadmap clear—so technology stops
+            being something you worry about.
+          </p>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Button href="#contact" variant="primary">
+              Book a free consultation
+              <ArrowRight size={16} />
+            </Button>
+            <Button href="#cases" variant="secondary">
+              See case studies
+            </Button>
           </div>
         </motion.div>
+
+        <motion.aside
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+          className="md:col-span-4 card p-6 space-y-4"
+        >
+          <p className="text-xs font-medium tracking-[0.18em] uppercase text-mute">
+            What we cover
+          </p>
+          <ul className="space-y-2 text-sm text-ink">
+            {[
+              "Hardware & helpdesk",
+              "Software & integrations",
+              "Cybersecurity & compliance",
+              "Networks & data center"
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div className="hairline pt-4 text-xs text-mute">
+            Trusted by teams across the DMV area.
+          </div>
+        </motion.aside>
       </div>
     </section>
   );
 }
-

@@ -7,24 +7,26 @@ export default function NotFound() {
       <Head>
         <title>Page Not Found · Haque Consultancy</title>
       </Head>
-      <main className="min-h-screen flex items-center justify-center section-padding bg-bgDark text-white">
+      <main className="min-h-screen flex items-center justify-center section-padding bg-cream text-ink">
         <div className="max-w-md text-center space-y-4">
-          <p className="text-xs font-medium tracking-[0.3em] uppercase text-accent">
+          <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent">
             Error 404
           </p>
           <h1 className="font-heading text-4xl sm:text-5xl">
-            Lost in the network
+            We can&apos;t find that page.
           </h1>
-          <p className="text-sm text-gray-300">
-            The page you&apos;re looking for doesn&apos;t exist or has been
-            moved. Let&apos;s route you home.
+          <p className="text-base text-mute">
+            The link may be broken or the page may have moved. Let&apos;s get
+            you back home.
           </p>
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center rounded-full px-6 py-2 text-sm font-medium bg-gradient-to-r from-accent to-accentPurple text-bgDark shadow-neon"
-          >
-            Back to home
-          </Link>
+          <div className="pt-2">
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center rounded-md bg-accent text-white px-5 py-2.5 text-sm font-medium hover:bg-accent-dark transition-colors"
+            >
+              Back to home
+            </Link>
+          </div>
         </div>
       </main>
     </>

@@ -3,8 +3,12 @@ import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Hero from "../components/sections/Hero";
 import Services from "../components/sections/Services";
+import WhyUs from "../components/sections/WhyUs";
+import CaseStudies from "../components/sections/CaseStudies";
+import Testimonial from "../components/sections/Testimonial";
 import About from "../components/sections/About";
 import Team from "../components/sections/Team";
+import CTASection from "../components/sections/CTASection";
 import Contact from "../components/sections/Contact";
 
 const STRUCTURED_DATA = {
@@ -41,7 +45,7 @@ export default function HomePage() {
           }}
         />
       </Head>
-      <div className="min-h-screen flex flex-col bg-bgDark text-white">
+      <div className="min-h-screen flex flex-col bg-cream text-ink">
         <Navbar />
         <main className="flex-1">
           <section id="home">
@@ -50,12 +54,20 @@ export default function HomePage() {
           <section id="services">
             <Services />
           </section>
+          <section id="why">
+            <WhyUs />
+          </section>
+          <section id="cases">
+            <CaseStudies />
+          </section>
+          <Testimonial />
           <section id="about">
             <About />
           </section>
           <section id="team">
             <Team />
           </section>
+          <CTASection />
           <section id="contact">
             <Contact />
           </section>

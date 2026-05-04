@@ -1,0 +1,84 @@
+---
+description: Visual design system and motion rules for the Haque Consultancy site.
+alwaysApply: true
+---
+
+# Design system — calm, professional, eye-soothing
+
+This is a consulting site, not a portfolio or tech demo. Every visual choice
+should reinforce trust, clarity, and professionalism.
+
+## Color tokens (Tailwind)
+
+Defined in `tailwind.config.ts`. Never use ad-hoc hex codes outside these.
+
+- `cream` `#FDFBF7` — primary page background. Use instead of pure white.
+- `sand` `#F0EEEA` — secondary background, alternating section panels.
+- `line` `#E2DFD9` — borders, dividers, hairlines.
+- `ink` `#1E1E1E` — primary text. (Never pure `#000`.)
+- `mute` `#5E5A55` — secondary text, captions, labels.
+- `accent` `#3A6B5E` — single brand accent (teal). Only on:
+  - primary CTA buttons,
+  - one headline word per section (sparingly),
+  - key icons and numbers,
+  - the focus ring.
+- `accent-dark` `#2E5448` — accent hover state.
+- `accent-soft` `#E7EFEC` — accent tinted background for icon chips, selection.
+
+### Forbidden
+
+- Neon / fluorescent colors anywhere.
+- Cyan-purple gradients.
+- Any color outside the palette above without an explicit reason.
+- `bg-gradient-to-*` other than the controlled CTA band.
+
+## Typography
+
+- Heading family: `Newsreader` (serif). Used via `font-heading` / `--font-heading`.
+- Body family: `Inter`. Used via `font-sans` / default.
+- Weights: 400 / 500 / 600 only.
+- Allowed sizes (`fontSize` ramp in Tailwind): `xs sm base lg xl 2xl 3xl 4xl 5xl`.
+- **Maximum three sizes per page**, including hero. Don’t introduce new sizes.
+- Line lengths capped at `max-w-prose` (≈ 65ch) for paragraphs.
+
+## Spacing & layout
+
+- Base spacing unit: 4 px (Tailwind default — don’t override).
+- Page max width: `max-w-content` (≈ 72rem / 1152 px). Never wider.
+- Vertical section rhythm: `py-20 md:py-28`.
+- Generous whitespace > dense layouts.
+- Asymmetrical 12-col grids over rigid boxy grids when possible.
+- Mobile first; everything must work down to a 320px viewport.
+
+## Motion rules
+
+- Allowed:
+  - Fade-in on scroll, **once** (`whileInView` + `viewport={{ once: true }}`).
+  - Hover scale up to `1.02` max.
+  - Color / shadow transitions ≤ 200 ms.
+- Forbidden:
+  - Auto-rotating, spinning, parallax, flying, flashing.
+  - Letter-by-letter stagger / typewriter.
+  - Carousels, sliders, marquees.
+  - Particle backgrounds, canvas / WebGL animations, custom cursors.
+  - `animation-iteration-count: infinite` of any kind.
+- Always respect `prefers-reduced-motion: reduce`. The global CSS already
+  zeroes durations under that media query — don’t fight it.
+
+## Components
+
+- `card` (`.card`): white background, 1px `line` border, `rounded-2xl`. No
+  glassmorphism, no `backdrop-blur` on content cards.
+- `card-soft`: same shape, `sand` background. Use for stat tiles inside `sand`
+  sections to keep contrast.
+- `Button`: three variants — `primary` (filled accent), `secondary` (outline),
+  `ghost`. Never invent a fourth.
+- Icons: `lucide-react` only. `strokeWidth={1.6}` for restrained line weight.
+  Never emojis-as-icons.
+
+## Imagery
+
+- No stock photo gradients, no AI-generated faces.
+- Future real photography (team, office) should be muted, warm, low-saturation.
+- Below-the-fold media must be lazy-loaded.
+- Keep `next/image` `unoptimized: true` — site is static-exported.

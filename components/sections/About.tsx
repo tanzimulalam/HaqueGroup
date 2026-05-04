@@ -1,47 +1,74 @@
-import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import SectionTitle from "../ui/SectionTitle";
-
-const AboutNetwork = dynamic(
-  () => import("../three/AboutNetwork"),
-  { ssr: false }
-);
 
 export default function About() {
   return (
-    <section className="section-padding py-20 md:py-24 bg-bgDark/95">
-      <div className="max-width grid md:grid-cols-2 gap-10 items-center">
-        <div className="space-y-6">
+    <section className="section-padding py-20 md:py-28">
+      <div className="max-width grid md:grid-cols-12 gap-12 items-start">
+        <div className="md:col-span-7 space-y-6">
           <SectionTitle
             eyebrow="About"
-            title="About Haque Consultancy"
-            subtitle="Driven by innovation, grounded in experience. We help you turn complex IT challenges into straightforward, sustainable solutions."
+            title="A small, deliberate consultancy."
+            subtitle="Based in Woodbridge, Virginia—serving clients across the DMV and beyond."
           />
-          <p className="text-sm sm:text-base text-gray-300">
-            Based in Woodbridge, VA, we&apos;re a team of passionate IT
-            professionals dedicated to delivering reliable, secure, and
-            innovative solutions. Though Haque Consultancy is a new brand,
-            our combined experience spans years in the industry. We treat every
-            client like a partner, ensuring your technology works seamlessly so
-            you can focus on your business.
-          </p>
-          <div className="grid grid-cols-3 gap-4 text-xs sm:text-sm">
-            <div className="glass-panel rounded-2xl p-3">
-              <p className="font-heading text-xl text-accent">10+</p>
-              <p className="text-gray-300">Years combined experience</p>
-            </div>
-            <div className="glass-panel rounded-2xl p-3">
-              <p className="font-heading text-xl text-accentPurple">25+</p>
-              <p className="text-gray-300">Projects delivered</p>
-            </div>
-            <div className="glass-panel rounded-2xl p-3">
-              <p className="font-heading text-xl text-white">100%</p>
-              <p className="text-gray-300">Client-first mindset</p>
-            </div>
+          <div className="space-y-4 text-base text-mute max-w-prose">
+            <p>
+              Haque Consultancy was founded on a simple idea: most businesses
+              don&apos;t need bigger IT, they need calmer IT. Fewer surprises,
+              clearer ownership, and senior people who can translate between
+              what the technology is doing and what the business actually
+              needs.
+            </p>
+            <p>
+              The brand is new, but the team isn&apos;t. Our combined
+              experience spans years of running infrastructure, securing it,
+              and rebuilding it when someone else didn&apos;t.
+            </p>
           </div>
         </div>
-        <AboutNetwork />
+
+        <motion.aside
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5 }}
+          className="md:col-span-5 card p-6 space-y-5"
+        >
+          <p className="text-xs font-medium tracking-[0.18em] uppercase text-mute">
+            How we work
+          </p>
+          <ul className="space-y-4 text-sm text-ink">
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
+              <span>
+                <strong className="font-medium">Discovery first.</strong>{" "}
+                <span className="text-mute">
+                  We listen, audit, and document before we recommend anything.
+                </span>
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
+              <span>
+                <strong className="font-medium">Vendor-neutral.</strong>{" "}
+                <span className="text-mute">
+                  No kickbacks, no preferred-partner pressure—just the right
+                  tool for the job.
+                </span>
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
+              <span>
+                <strong className="font-medium">Documented handover.</strong>{" "}
+                <span className="text-mute">
+                  When we leave, you can keep running without us.
+                </span>
+              </span>
+            </li>
+          </ul>
+        </motion.aside>
       </div>
     </section>
   );
 }
-

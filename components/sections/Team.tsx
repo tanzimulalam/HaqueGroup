@@ -11,34 +11,35 @@ const founders: Member[] = [
   {
     name: "Mohammad Alam",
     role: "Founder, President & Lead Consultant",
-    bio: "Leads overall vision, strategy, and high-impact consulting across infrastructure, networking, and cybersecurity."
+    bio: "Leads vision, strategy, and senior delivery across infrastructure, networking, and cybersecurity."
   },
   {
     name: "Anamika Rashid",
     role: "Co-Founder & Vice President",
-    bio: "Co-leads the direction of Haque Consultancy and supports client relationships, planning, and delivery."
+    bio: "Co-leads the firm, supports client relationships, and oversees planning and delivery."
   }
 ];
 
-const directorsAndManagement: Member[] = [
+const directors: Member[] = [
   {
     name: "Tasnimul Alam",
-    role: "Technical Director & Software Consultant",
-    bio: "Designs and builds reliable software systems, integrates business applications, and oversees technical delivery."
+    role: "Technical Director · Software",
+    bio: "Designs reliable software systems, integrations, and tooling that operations teams can actually maintain."
   },
   {
     name: "Tanzimul Fahim",
-    role: "Managing Director & Cybersecurity Consultant",
-    bio: "Oversees operations at a strategic level while advising on security posture, incident response, and compliance."
+    role: "Managing Director · Cybersecurity",
+    bio: "Runs day-to-day operations and advises on security posture, incident response, and compliance."
   },
   {
-    name: "Vacant Position",
-    role: "Manager (Hiring Soon)",
-    bio: "Future role to help coordinate projects, manage day-to-day delivery, and support our growing client base."
+    name: "Hiring",
+    role: "Operations Manager",
+    bio: "We're looking for a hands-on operations manager to coordinate delivery as the practice grows."
   }
 ];
 
 function getInitials(name: string) {
+  if (name.toLowerCase() === "hiring") return "+";
   const parts = name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
   return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
@@ -50,72 +51,65 @@ interface MemberCardProps {
 }
 
 function MemberCard({ member, index }: MemberCardProps) {
-  const isVacant = member.name.toLowerCase().includes("vacant");
-
+  const isVacant = member.name.toLowerCase() === "hiring";
   return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      whileHover={{ y: -6 }}
-      className="glass-panel rounded-3xl p-6 text-center relative overflow-hidden group"
+      transition={{ duration: 0.45, delay: index * 0.05 }}
+      className={`card p-6 ${isVacant ? "border-dashed" : ""}`}
     >
-      <div
-        aria-hidden="true"
-        className="mx-auto mb-4 h-16 w-16 rounded-full bg-gradient-to-br from-accent to-accentPurple flex items-center justify-center text-bgDark font-heading text-xl"
-      >
-        {getInitials(member.name)}
+      <div className="flex items-center gap-4 mb-4">
+        <div
+          aria-hidden="true"
+          className="h-11 w-11 rounded-full bg-accent-soft text-accent font-heading flex items-center justify-center"
+        >
+          {getInitials(member.name)}
+        </div>
+        <div>
+          <h3 className="font-heading text-lg text-ink leading-tight">
+            {member.name}
+          </h3>
+          <p className="text-xs uppercase tracking-[0.16em] text-mute mt-0.5">
+            {member.role}
+          </p>
+        </div>
       </div>
-      <h3 className="font-heading text-lg mb-1">{member.name}</h3>
-      <p className="text-xs uppercase tracking-[0.2em] text-accent mb-2">
-        {member.role}
-      </p>
-      <p className="text-sm text-gray-300 mb-4">{member.bio}</p>
-      <p className="text-xs text-accentPurple/80 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-        {isVacant ? "Send your resume to apply" : "LinkedIn profile (coming soon)"}
-      </p>
+      <p className="text-sm text-mute">{member.bio}</p>
     </motion.article>
   );
 }
 
 export default function Team() {
   return (
-    <section className="section-padding py-20 md:py-24 bg-bgDark">
+    <section className="section-padding py-20 md:py-28 bg-sand">
       <div className="max-width space-y-12">
         <SectionTitle
           eyebrow="Team"
-          title="Leadership & Founders"
-          subtitle="A focused leadership team guiding Haque Consultancy across strategy, delivery, and security."
+          title="Senior people, accountable to you."
+          subtitle="No layered account management—you talk to the engineers doing the work."
           align="center"
         />
 
-        <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-accent text-center">
+        <div className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.18em] text-mute text-center">
             Founders
           </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            {founders.map((member, index) => (
-              <MemberCard
-                key={member.name}
-                member={member}
-                index={index}
-              />
+          <div className="grid gap-5 md:grid-cols-2">
+            {founders.map((member, idx) => (
+              <MemberCard key={member.name} member={member} index={idx} />
             ))}
           </div>
         </div>
 
-        <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-accent text-center">
+        <div className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.18em] text-mute text-center">
             Directors & Management
           </p>
-          <div className="grid gap-6 md:grid-cols-3">
-            {directorsAndManagement.map((member, index) => (
-              <MemberCard
-                key={member.name}
-                member={member}
-                index={index}
-              />
+          <div className="grid gap-5 md:grid-cols-3">
+            {directors.map((member, idx) => (
+              <MemberCard key={member.name} member={member} index={idx} />
             ))}
           </div>
         </div>

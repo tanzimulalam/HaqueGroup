@@ -42,8 +42,6 @@ export default function Contact() {
       `Name: ${name}\nEmail: ${email}\n\n${message}`
     );
 
-    // Open the user's default email client with a pre-populated message.
-    // This is a no-backend fallback that always works.
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
 
     setTimeout(() => {
@@ -54,40 +52,39 @@ export default function Contact() {
   };
 
   return (
-    <section className="section-padding py-20 md:py-24 bg-bgDark/95">
-      <div className="max-width grid md:grid-cols-2 gap-10 items-start">
-        <div className="space-y-6">
+    <section className="section-padding py-20 md:py-28">
+      <div className="max-width grid md:grid-cols-2 gap-12 items-start">
+        <div className="space-y-8">
           <SectionTitle
             eyebrow="Contact"
-            title="Let's Talk"
-            subtitle="Ready to take your IT to the next level? Reach out and we'll respond with a tailored next step."
+            title="Tell us what you&rsquo;re working on."
+            subtitle="Most projects start with a 30-minute conversation. We&rsquo;ll come back with a clear, written next step."
           />
-          <div className="space-y-3 text-sm text-gray-300">
-            <p>
-              Whether you&apos;re troubleshooting a single issue or planning a
-              full-scale infrastructure upgrade, we&apos;re here to help.
-            </p>
+
+          <div className="space-y-3">
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="group flex items-center gap-3 rounded-2xl glass-panel px-4 py-3 hover:border-accent/40 transition-colors"
+              className="flex items-center gap-3 card p-4 hover:border-accent/40 transition-colors"
             >
-              <Mail size={18} className="text-accent" />
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-accent-soft text-accent">
+                <Mail size={16} strokeWidth={1.6} />
+              </span>
               <span className="text-sm">
-                <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">
+                <span className="block text-xs uppercase tracking-[0.18em] text-mute">
                   Email
                 </span>
-                <span className="text-accent group-hover:underline">
-                  {CONTACT_EMAIL}
-                </span>
+                <span className="text-ink">{CONTACT_EMAIL}</span>
               </span>
             </a>
-            <div className="flex items-center gap-3 rounded-2xl glass-panel px-4 py-3">
-              <MapPin size={18} className="text-accentPurple" />
+            <div className="flex items-center gap-3 card p-4">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-accent-soft text-accent">
+                <MapPin size={16} strokeWidth={1.6} />
+              </span>
               <span className="text-sm">
-                <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">
+                <span className="block text-xs uppercase tracking-[0.18em] text-mute">
                   Location
                 </span>
-                <span className="text-white">{LOCATION}</span>
+                <span className="text-ink">{LOCATION}</span>
               </span>
             </div>
           </div>
@@ -95,18 +92,18 @@ export default function Contact() {
 
         <motion.form
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="glass-panel rounded-3xl p-6 space-y-4"
+          transition={{ duration: 0.5 }}
+          className="card p-6 sm:p-7 space-y-4"
           aria-label="Contact form"
           noValidate
         >
           <div>
             <label
               htmlFor="name"
-              className="block text-xs font-medium text-gray-300 mb-1"
+              className="block text-xs font-medium text-mute mb-1.5 uppercase tracking-[0.14em]"
             >
               Name
             </label>
@@ -115,13 +112,13 @@ export default function Contact() {
               name="name"
               required
               autoComplete="name"
-              className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+              className="w-full rounded-md bg-cream border border-line px-3 py-2.5 text-sm text-ink placeholder:text-mute outline-none focus:border-accent focus:ring-1 focus:ring-accent"
             />
           </div>
           <div>
             <label
               htmlFor="email"
-              className="block text-xs font-medium text-gray-300 mb-1"
+              className="block text-xs font-medium text-mute mb-1.5 uppercase tracking-[0.14em]"
             >
               Email
             </label>
@@ -131,35 +128,35 @@ export default function Contact() {
               type="email"
               required
               autoComplete="email"
-              className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+              className="w-full rounded-md bg-cream border border-line px-3 py-2.5 text-sm text-ink placeholder:text-mute outline-none focus:border-accent focus:ring-1 focus:ring-accent"
             />
           </div>
           <div>
             <label
               htmlFor="message"
-              className="block text-xs font-medium text-gray-300 mb-1"
+              className="block text-xs font-medium text-mute mb-1.5 uppercase tracking-[0.14em]"
             >
-              Message
+              How can we help?
             </label>
             <textarea
               id="message"
               name="message"
-              rows={4}
+              rows={5}
               required
-              className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent resize-none"
+              className="w-full rounded-md bg-cream border border-line px-3 py-2.5 text-sm text-ink placeholder:text-mute outline-none focus:border-accent focus:ring-1 focus:ring-accent resize-none"
             />
           </div>
           <button
             type="submit"
             disabled={status === "sending"}
-            className="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-full bg-gradient-to-r from-accent to-accentPurple text-bgDark text-sm font-medium py-2 shadow-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bgDark disabled:opacity-60 disabled:cursor-not-allowed"
+            className="inline-flex items-center justify-center gap-2 w-full rounded-md bg-accent text-white text-sm font-medium py-2.5 hover:bg-accent-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <Send size={16} />
-            {status === "sending" ? "Opening your email…" : "Send Message"}
+            <Send size={15} />
+            {status === "sending" ? "Opening your email…" : "Send message"}
           </button>
 
-          <p className="text-[11px] text-gray-500">
-            This form will open your default email client with your message
+          <p className="text-[11px] text-mute">
+            This form opens your default email client with the message
             pre-filled. Prefer to email directly?{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
@@ -171,23 +168,13 @@ export default function Contact() {
 
           <div role="status" aria-live="polite" className="min-h-[1.25rem]">
             {status === "success" && (
-              <motion.p
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xs text-accent"
-              >
-                Thanks! Your email client should be open. We&apos;ll respond
+              <p className="text-xs text-accent">
+                Thanks—your email client should be open. We&apos;ll respond
                 shortly.
-              </motion.p>
+              </p>
             )}
             {status === "error" && error && (
-              <motion.p
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xs text-red-400"
-              >
-                {error}
-              </motion.p>
+              <p className="text-xs text-red-700">{error}</p>
             )}
           </div>
         </motion.form>
