@@ -1,14 +1,56 @@
 import { FormEvent, useState } from "react";
 import { motion } from "framer-motion";
+import { Mail, MapPin, Send } from "lucide-react";
 import SectionTitle from "../ui/SectionTitle";
 
+const CONTACT_EMAIL = "haque8consulting@gmail.com";
+const LOCATION = "Woodbridge, VA 22193";
+
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
-  const [status, setStatus] = useState<"idle" | "success">("idle");
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("success");
-    setTimeout(() => setStatus("idle"), 4000);
+    setError(null);
+
+    const formEl = e.currentTarget;
+    const formData = new FormData(formEl);
+    const name = (formData.get("name") as string | null)?.trim() ?? "";
+    const email = (formData.get("email") as string | null)?.trim() ?? "";
+    const message = (formData.get("message") as string | null)?.trim() ?? "";
+
+    if (!name || !email || !message) {
+      setStatus("error");
+      setError("Please fill out all fields.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setStatus("error");
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    setStatus("sending");
+
+    const subject = encodeURIComponent(`New inquiry from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\n${message}`
+    );
+
+    // Open the user's default email client with a pre-populated message.
+    // This is a no-backend fallback that always works.
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
+    setTimeout(() => {
+      setStatus("success");
+      formEl.reset();
+    }, 400);
+    setTimeout(() => setStatus("idle"), 6000);
   };
 
   return (
@@ -18,24 +60,39 @@ export default function Contact() {
           <SectionTitle
             eyebrow="Contact"
             title="Let's Talk"
-            subtitle="Ready to take your IT to the next level? Reach out and we’ll respond with a tailored next step."
+            subtitle="Ready to take your IT to the next level? Reach out and we'll respond with a tailored next step."
           />
           <div className="space-y-3 text-sm text-gray-300">
             <p>
               Whether you&apos;re troubleshooting a single issue or planning a
               full-scale infrastructure upgrade, we&apos;re here to help.
             </p>
-            <p>
-              Based in{" "}
-              <span className="text-accent">Woodbridge, VA 22193</span>,
-              partnering with businesses locally and beyond.
-            </p>
-            <p>
-              Email:{" "}
-              <span className="text-accent">haque8consulting@gmail.com</span>
-            </p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="group flex items-center gap-3 rounded-2xl glass-panel px-4 py-3 hover:border-accent/40 transition-colors"
+            >
+              <Mail size={18} className="text-accent" />
+              <span className="text-sm">
+                <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">
+                  Email
+                </span>
+                <span className="text-accent group-hover:underline">
+                  {CONTACT_EMAIL}
+                </span>
+              </span>
+            </a>
+            <div className="flex items-center gap-3 rounded-2xl glass-panel px-4 py-3">
+              <MapPin size={18} className="text-accentPurple" />
+              <span className="text-sm">
+                <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">
+                  Location
+                </span>
+                <span className="text-white">{LOCATION}</span>
+              </span>
+            </div>
           </div>
         </div>
+
         <motion.form
           onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 30 }}
@@ -44,6 +101,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="glass-panel rounded-3xl p-6 space-y-4"
           aria-label="Contact form"
+          noValidate
         >
           <div>
             <label
@@ -56,6 +114,7 @@ export default function Contact() {
               id="name"
               name="name"
               required
+              autoComplete="name"
               className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
             />
           </div>
@@ -71,6 +130,7 @@ export default function Contact() {
               name="email"
               type="email"
               required
+              autoComplete="email"
               className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
             />
           </div>
@@ -91,23 +151,47 @@ export default function Contact() {
           </div>
           <button
             type="submit"
-            className="mt-2 inline-flex items-center justify-center w-full rounded-full bg-gradient-to-r from-accent to-accentPurple text-bgDark text-sm font-medium py-2 shadow-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bgDark"
+            disabled={status === "sending"}
+            className="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-full bg-gradient-to-r from-accent to-accentPurple text-bgDark text-sm font-medium py-2 shadow-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bgDark disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Send Message
+            <Send size={16} />
+            {status === "sending" ? "Opening your email…" : "Send Message"}
           </button>
-          {status === "success" && (
-            <motion.p
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-xs text-accent mt-2"
+
+          <p className="text-[11px] text-gray-500">
+            This form will open your default email client with your message
+            pre-filled. Prefer to email directly?{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-accent hover:underline"
             >
-              Thank you! Your message has been received. We&apos;ll be in touch
-              shortly.
-            </motion.p>
-          )}
+              {CONTACT_EMAIL}
+            </a>
+          </p>
+
+          <div role="status" aria-live="polite" className="min-h-[1.25rem]">
+            {status === "success" && (
+              <motion.p
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xs text-accent"
+              >
+                Thanks! Your email client should be open. We&apos;ll respond
+                shortly.
+              </motion.p>
+            )}
+            {status === "error" && error && (
+              <motion.p
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xs text-red-400"
+              >
+                {error}
+              </motion.p>
+            )}
+          </div>
         </motion.form>
       </div>
     </section>
   );
 }
-

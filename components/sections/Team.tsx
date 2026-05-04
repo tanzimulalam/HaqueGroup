@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import SectionTitle from "../ui/SectionTitle";
 
-const founders = [
+type Member = {
+  name: string;
+  role: string;
+  bio: string;
+};
+
+const founders: Member[] = [
   {
     name: "Mohammad Alam",
     role: "Founder, President & Lead Consultant",
@@ -14,7 +20,7 @@ const founders = [
   }
 ];
 
-const directorsAndManagement = [
+const directorsAndManagement: Member[] = [
   {
     name: "Tasnimul Alam",
     role: "Technical Director & Software Consultant",
@@ -32,10 +38,51 @@ const directorsAndManagement = [
   }
 ];
 
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+}
+
+interface MemberCardProps {
+  member: Member;
+  index: number;
+}
+
+function MemberCard({ member, index }: MemberCardProps) {
+  const isVacant = member.name.toLowerCase().includes("vacant");
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      whileHover={{ y: -6 }}
+      className="glass-panel rounded-3xl p-6 text-center relative overflow-hidden group"
+    >
+      <div
+        aria-hidden="true"
+        className="mx-auto mb-4 h-16 w-16 rounded-full bg-gradient-to-br from-accent to-accentPurple flex items-center justify-center text-bgDark font-heading text-xl"
+      >
+        {getInitials(member.name)}
+      </div>
+      <h3 className="font-heading text-lg mb-1">{member.name}</h3>
+      <p className="text-xs uppercase tracking-[0.2em] text-accent mb-2">
+        {member.role}
+      </p>
+      <p className="text-sm text-gray-300 mb-4">{member.bio}</p>
+      <p className="text-xs text-accentPurple/80 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        {isVacant ? "Send your resume to apply" : "LinkedIn profile (coming soon)"}
+      </p>
+    </motion.article>
+  );
+}
+
 export default function Team() {
   return (
     <section className="section-padding py-20 md:py-24 bg-bgDark">
-      <div className="max-width space-y-10">
+      <div className="max-width space-y-12">
         <SectionTitle
           eyebrow="Team"
           title="Leadership & Founders"
@@ -43,74 +90,32 @@ export default function Team() {
           align="center"
         />
 
-        {/* Founders */}
         <div className="space-y-4">
           <p className="text-xs uppercase tracking-[0.25em] text-accent text-center">
             Founders
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {founders.map((member, index) => (
-              <motion.article
+              <MemberCard
                 key={member.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ rotateY: 3, y: -6 }}
-                className="glass-panel rounded-3xl p-6 text-center relative overflow-hidden group"
-              >
-                <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-gradient-to-br from-accent to-accentPurple flex items-center justify-center text-bgDark font-heading text-xl">
-                  {member.name.charAt(0)}
-                </div>
-                <h3 className="font-heading text-lg mb-1">{member.name}</h3>
-                <p className="text-xs uppercase tracking-[0.2em] text-accent mb-2">
-                  {member.role}
-                </p>
-                <p className="text-sm text-gray-300 mb-4">{member.bio}</p>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileHover={{ opacity: 1, y: 0 }}
-                  className="text-xs text-accentPurple"
-                >
-                  LinkedIn profile (coming soon)
-                </motion.div>
-              </motion.article>
+                member={member}
+                index={index}
+              />
             ))}
           </div>
         </div>
 
-        {/* Directors & Management */}
         <div className="space-y-4">
           <p className="text-xs uppercase tracking-[0.25em] text-accent text-center">
             Directors & Management
           </p>
           <div className="grid gap-6 md:grid-cols-3">
             {directorsAndManagement.map((member, index) => (
-              <motion.article
+              <MemberCard
                 key={member.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ rotateY: 3, y: -6 }}
-                className="glass-panel rounded-3xl p-6 text-center relative overflow-hidden group"
-              >
-                <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-gradient-to-br from-accent to-accentPurple flex items-center justify-center text-bgDark font-heading text-xl">
-                  {member.name.charAt(0)}
-                </div>
-                <h3 className="font-heading text-lg mb-1">{member.name}</h3>
-                <p className="text-xs uppercase tracking-[0.2em] text-accent mb-2">
-                  {member.role}
-                </p>
-                <p className="text-sm text-gray-300 mb-4">{member.bio}</p>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileHover={{ opacity: 1, y: 0 }}
-                  className="text-xs text-accentPurple"
-                >
-                  LinkedIn profile (coming soon)
-                </motion.div>
-              </motion.article>
+                member={member}
+                index={index}
+              />
             ))}
           </div>
         </div>
@@ -118,4 +123,3 @@ export default function Team() {
     </section>
   );
 }
-

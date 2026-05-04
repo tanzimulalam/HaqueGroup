@@ -28,8 +28,8 @@ const config: Config = {
       },
       keyframes: {
         "pulse-soft": {
-          "0%, 100%": { opacity: 0.5 },
-          "50%": { opacity: 1 }
+          "0%, 100%": { opacity: "0.5" },
+          "50%": { opacity: "1" }
         }
       }
     }

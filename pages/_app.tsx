@@ -4,15 +4,42 @@ import Head from "next/head";
 import "../styles/globals.css";
 import Cursor from "../components/layout/Cursor";
 
+const SITE_URL = "https://haqueconsultancy.com";
+
 const SEO_CONFIG = {
-  title: "Haque Consultancy – IT Solutions & Consulting",
+  titleTemplate: "%s | Haque Consultancy",
+  defaultTitle: "Haque Consultancy – IT Solutions & Consulting",
   description:
-    "Hardware, software, cybersecurity, and network support for modern businesses.",
+    "Haque Consultancy delivers hardware, software, cybersecurity, network, and data center support for modern businesses—based in Woodbridge, VA.",
+  canonical: SITE_URL,
   openGraph: {
     type: "website",
     locale: "en_US",
-    site_name: "Haque Consultancy"
-  }
+    url: SITE_URL,
+    site_name: "Haque Consultancy",
+    title: "Haque Consultancy – IT Solutions & Consulting",
+    description:
+      "Hardware, software, cybersecurity, network, and data center support for modern businesses.",
+    images: [
+      {
+        url: `${SITE_URL}/og-image.svg`,
+        width: 1200,
+        height: 630,
+        alt: "Haque Consultancy"
+      }
+    ]
+  },
+  twitter: {
+    cardType: "summary_large_image"
+  },
+  additionalMetaTags: [
+    {
+      name: "keywords",
+      content:
+        "Haque Consultancy, IT consulting, cybersecurity, network setup, data center, Woodbridge VA, IT support, hardware support, software troubleshooting"
+    },
+    { name: "author", content: "Haque Consultancy" }
+  ]
 };
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -23,17 +50,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <DefaultSeo {...SEO_CONFIG} />
       <Cursor />
@@ -41,4 +57,3 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-
