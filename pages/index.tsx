@@ -22,7 +22,7 @@ const STRUCTURED_DATA = {
     postalCode: "22193",
     addressCountry: "US"
   },
-  url: "https://haqueconsultancy.com",
+  url: "https://haque-consulting.com",
   founder: [
     { "@type": "Person", name: "Mohammad Alam" },
     { "@type": "Person", name: "Anamika Rashid" }

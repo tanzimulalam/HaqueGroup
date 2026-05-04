@@ -138,14 +138,58 @@ Key folders and files:
 
 ## Deployment
 
-The app is ready to deploy to **Vercel** or any Node-compatible hosting:
+The site is configured for **fully static export** (`output: "export"` in `next.config.mjs`)
+so it can be hosted on GitHub Pages, Vercel, Netlify, Cloudflare Pages, S3, or
+any plain static host.
 
-1. Push the repo to GitHub (already configured for `https://github.com/tanzimulalam/HaqueGroup`).
-2. On [Vercel](https://vercel.com/), click **New Project**, import the repo.
-3. Use the default Next.js settings (build command `npm run build`, output `.next`).
-4. Deploy – Vercel will handle build & hosting.
+### GitHub Pages (current setup)
 
-You can also deploy to other platforms (Netlify, Render, etc.) using their Next.js guides.
+This repo includes a workflow at `.github/workflows/deploy.yml` that builds the
+site and deploys the `out/` folder to GitHub Pages on every push to `main`.
+
+One-time setup in GitHub:
+
+1. **Settings → Pages → Build and deployment → Source: `GitHub Actions`**
+2. Push to `main` (or run the workflow manually from the **Actions** tab).
+3. The first run will publish to `https://tanzimulalam.github.io/HaqueGroup/`.
+4. **Settings → Pages → Custom domain → `haque-consulting.com`** (the
+   `public/CNAME` file in this repo already declares it, so this should
+   auto-fill on the first deploy).
+5. Tick **Enforce HTTPS** once GitHub finishes provisioning the certificate.
+
+### DNS records for `haque-consulting.com`
+
+At your domain registrar (Namecheap / GoDaddy / Cloudflare / etc.), set:
+
+**Apex record (`haque-consulting.com`)** – four `A` records:
+
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+**`www` subdomain** – one `CNAME` record:
+
+```
+www  CNAME  tanzimulalam.github.io
+```
+
+Propagation usually takes 10–60 minutes. While you wait, GitHub Pages will keep
+showing a “DNS check in progress” banner; that's normal.
+
+### Local preview of the static build
+
+```bash
+npm run build           # produces ./out
+npx serve out           # preview at http://localhost:3000
+```
+
+### Vercel (alternative)
+
+Static-export still works on Vercel: import the repo, accept the defaults, and
+deploy. No environment variables are required.
 
 ---
 

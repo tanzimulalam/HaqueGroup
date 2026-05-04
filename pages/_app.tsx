@@ -4,7 +4,7 @@ import Head from "next/head";
 import "../styles/globals.css";
 import Cursor from "../components/layout/Cursor";
 
-const SITE_URL = "https://haqueconsultancy.com";
+const SITE_URL = "https://haque-consulting.com";
 
 const SEO_CONFIG = {
   titleTemplate: "%s | Haque Consultancy",
