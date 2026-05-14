@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import Button from "../ui/Button";
 
 const navItems = [
+  { label: "Companies", href: "#companies" },
   { label: "Services", href: "#services" },
   { label: "Why us", href: "#why" },
   { label: "Case studies", href: "#cases" },

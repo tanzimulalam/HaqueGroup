@@ -7,6 +7,7 @@ const linkSections = [
   {
     title: "Practice",
     links: [
+      { label: "Companies", href: "#companies" },
       { label: "Services", href: "#services" },
       { label: "Why us", href: "#why" },
       { label: "Case studies", href: "#cases" }
@@ -17,7 +18,10 @@ const linkSections = [
     links: [
       { label: "About", href: "#about" },
       { label: "Team", href: "#team" },
-      { label: "Contact", href: "#contact" }
+      { label: "Contact", href: "#contact" },
+      { label: "DTD Tech Support", href: "/dtd-tech-support/" },
+      { label: "Web Services & Solutions", href: "/haque-web-services/" },
+      { label: "Cybersecurity", href: "/cybersecurity-solutions/" }
     ]
   }
 ];

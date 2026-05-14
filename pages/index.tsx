@@ -2,6 +2,7 @@ import Head from "next/head";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Hero from "../components/sections/Hero";
+import CompaniesIntro from "../components/sections/CompaniesIntro";
 import Services from "../components/sections/Services";
 import WhyUs from "../components/sections/WhyUs";
 import CaseStudies from "../components/sections/CaseStudies";
@@ -51,6 +52,7 @@ export default function HomePage() {
           <section id="home">
             <Hero />
           </section>
+          <CompaniesIntro />
           <section id="services">
             <Services />
           </section>
