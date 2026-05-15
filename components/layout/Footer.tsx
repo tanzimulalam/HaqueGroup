@@ -17,7 +17,6 @@ const linkSections = [
     title: "Firm",
     links: [
       { label: "About", href: "#about" },
-      { label: "Team", href: "#team" },
       { label: "Contact", href: "#contact" },
       { label: "DTD Tech Support", href: "/dtd-tech-support/" },
       { label: "Web Services & Solutions", href: "/haque-web-services/" },

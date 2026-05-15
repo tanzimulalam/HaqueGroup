@@ -8,7 +8,6 @@ import WhyUs from "../components/sections/WhyUs";
 import CaseStudies from "../components/sections/CaseStudies";
 import Testimonial from "../components/sections/Testimonial";
 import About from "../components/sections/About";
-import Team from "../components/sections/Team";
 import CTASection from "../components/sections/CTASection";
 import Contact from "../components/sections/Contact";
 
@@ -27,11 +26,7 @@ const STRUCTURED_DATA = {
     postalCode: "22193",
     addressCountry: "US"
   },
-  url: "https://haque-consulting.com",
-  founder: [
-    { "@type": "Person", name: "Mohammad Alam" },
-    { "@type": "Person", name: "Anamika Rashid" }
-  ]
+  url: "https://haque-consulting.com"
 };
 
 export default function HomePage() {
@@ -65,9 +60,6 @@ export default function HomePage() {
           <Testimonial />
           <section id="about">
             <About />
-          </section>
-          <section id="team">
-            <Team />
           </section>
           <CTASection />
           <section id="contact">
